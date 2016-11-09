@@ -2,7 +2,7 @@
 # @Author: ZwEin
 # @Date:   2016-07-22 17:52:30
 # @Last Modified by:   ZwEin
-# @Last Modified time: 2016-11-08 18:10:46
+# @Last Modified time: 2016-11-08 18:27:24
 
 import re
 
@@ -157,9 +157,6 @@ class HWHelper(object):
     def extract(self, text):
         height_extractions = self.extract_height(text)
         weight_extractions = self.extract_weight(text)
-
-        # print height_extractions
-        # print weight_extractions
 
         height_extractions = self.remove_dups([self.normalize_height(_) for _ in height_extractions])
         weight_extractions = self.remove_dups([self.normalize_weight(_) for _ in weight_extractions])

@@ -2,13 +2,13 @@
 # @Author: ZwEin
 # @Date:   2016-11-08 14:50:34
 # @Last Modified by:   ZwEin
-# @Last Modified time: 2016-11-08 18:16:51
+# @Last Modified time: 2016-11-08 18:27:02
 import sys
 import time
 import os
 import unittest
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+# sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 # TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 
 import groundtruth

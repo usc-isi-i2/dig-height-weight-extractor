@@ -52,31 +52,31 @@ reg_us_height_unit_ft = r'(?:(?:\b\d{1}\.\d{1}[ ]*ft)|(?:\b\d{1}[ ]*ft))[ ]*(?:(
 reg_us_weight_unit_lb = r'\b\d{2,3}[ ]*(?:lb|lbs)\b'
 reg_us_weight_unit_kg = r'\b\d{2}[ ]*kg\b'
 
-re_us_height = re.compile(r'(?:'+ r'|'.join([
-                    reg_us_height_symbol,
-                    reg_us_height_unit_cm,
-                    reg_us_height_unit_ft
-                ]) + r')', re.IGNORECASE)
+re_us_height = re.compile(r'(?:' + r'|'.join([
+    reg_us_height_symbol,
+    reg_us_height_unit_cm,
+    reg_us_height_unit_ft
+]) + r')', re.IGNORECASE)
 
-re_us_weight = re.compile(r'(?:'+ r'|'.join([
-                    reg_us_weight_unit_lb,
-                    reg_us_weight_unit_kg
-                ]) + r')', re.IGNORECASE)
+re_us_weight = re.compile(r'(?:' + r'|'.join([
+    reg_us_weight_unit_lb,
+    reg_us_weight_unit_kg
+]) + r')', re.IGNORECASE)
 
 # Reg for target after label height or weight, 'ls': label solution
-reg_ls_height = r'(?<=height)[: \n]*' + r'(?:'+ r'|'.join([
-                    reg_us_height_unit_cm,
-                    reg_us_height_unit_ft,
-                    reg_us_height_symbol,
-                    r'(?:\d{1}\.\d{1,2})',
-                    r'(?:\d{1,3})'
-                ]) + r')'
+reg_ls_height = r'(?<=height)[: \n]*' + r'(?:' + r'|'.join([
+    reg_us_height_unit_cm,
+    reg_us_height_unit_ft,
+    reg_us_height_symbol,
+    r'(?:\d{1}\.\d{1,2})',
+    r'(?:\d{1,3})'
+]) + r')'
 
-reg_ls_weight = r'(?<=weight)[: \n]*' + r'(?:'+ r'|'.join([
-                    reg_us_weight_unit_lb,
-                    reg_us_weight_unit_kg,
-                    r'(?:\d{1,3})'
-                ]) + r')'
+reg_ls_weight = r'(?<=weight)[: \n]*' + r'(?:' + r'|'.join([
+    reg_us_weight_unit_lb,
+    reg_us_weight_unit_kg,
+    r'(?:\d{1,3})'
+]) + r')'
 
 re_ls_height = re.compile(reg_ls_height, re.IGNORECASE)
 re_ls_weight = re.compile(reg_ls_weight, re.IGNORECASE)
@@ -103,8 +103,9 @@ class HWHelper(object):
         extraction = self.clean_extraction(extraction)
         ans = {}
         if '\'' in extraction:
-            extraction = '\''.join([_ for _ in extraction.split('\'') if _])  # remove duplicate '
-            extraction = extraction.strip('\'') # remove following '
+            # remove duplicate '
+            extraction = '\''.join([_ for _ in extraction.split('\'') if _])
+            extraction = extraction.strip('\'')  # remove following '
 
             feet, inch = extraction.split('\'', 1)
             ans[HW_HEIGHT_UNIT_FOOT] = int(feet)
@@ -158,26 +159,27 @@ class HWHelper(object):
         height_extractions = self.extract_height(text)
         weight_extractions = self.extract_weight(text)
 
-        height_extractions = self.remove_dups([self.normalize_height(_) for _ in height_extractions])
-        weight_extractions = self.remove_dups([self.normalize_weight(_) for _ in weight_extractions])
+        height_extractions = self.remove_dups(
+            [self.normalize_height(_) for _ in height_extractions])
+        weight_extractions = self.remove_dups(
+            [self.normalize_weight(_) for _ in weight_extractions])
 
         return {
-                    'height': height_extractions, 
-                    'weight': weight_extractions
-                }
-        
+            'height': height_extractions,
+            'weight': weight_extractions
+        }
+
 
 if __name__ == '__main__':
     # text = "\n TS RUBI: THE NAME SAYS IT ALL!  \n INCALL $250 OUTCALL $350 \n \n \n \n \n \n Gender \n Age \n Ethnicity \n Hair Color \n Eye Color \n Height \n Weight \n Measurements \n Affiliation \n Availability \n Available To \n \n \n \n \n Transsexual \n 27 \n Latino/Hispanic \n Brown \n Hazel \n 5'5\" \n 130 lb \n 34C - 28\" - 34\" \n "
-    
+
     # text = "\n \n Height: \r\n                          5'3''\r\n                       \n \n \n \n \n \n Weight: \r\n                          125 lbs\r\n                       \n \n \n \n \n \n"
 
     # text = "Breasts DD Eyes gray Height 1.52 Skin Tanned Weight 60"
     # text = "I am 25 of age, stand 5ft5in, fair in complexion, Long hair"
-    
 
     # text = "Measurements: 105lbs 5'2\" 34c with a beautiful face"
-    
+
     text = "Travel: \n worldwide \n \n \n Weight: \n 117 lb (53 kg) \n \n \n Height: \n 5.5 ft (166 cm) \n \n \n Ethnicity: \n Indian \n"
 
     hw = HWHelper()

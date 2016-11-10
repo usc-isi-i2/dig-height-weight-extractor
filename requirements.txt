@@ -1,1 +1,1 @@
-digExtractor>=0.1.8
+digExtractor>=0.3.0

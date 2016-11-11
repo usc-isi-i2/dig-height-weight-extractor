@@ -2,7 +2,7 @@
 # @Author: ZwEin
 # @Date:   2016-07-22 17:52:30
 # @Last Modified by:   ZwEin
-# @Last Modified time: 2016-11-11 12:49:36
+# @Last Modified time: 2016-11-11 13:35:09
 
 import re
 
@@ -198,8 +198,26 @@ class HWHelper(object):
             for (unit, value) in extraction.iteritems():
                 imd_value += HW_TRANSFORM_DICT[(unit, target_unit)] * value
                 # print (unit, target_unit), imd_value, HW_TRANSFORM_DICT[(unit, target_unit)], value
-            ans.append(imd_value)
+            if self.sanity_check(target_unit, imd_value):
+                ans.append(imd_value)
         return ans
+
+    ######################################################################
+    #   Sanity Check
+    ######################################################################
+
+    def sanity_check(self, unit, value):
+        if (unit, HW_HEIGHT_UNIT_CENTIMETER) in HW_TRANSFORM_DICT:
+            check_value = HW_TRANSFORM_DICT[(unit, HW_HEIGHT_UNIT_CENTIMETER)] * value
+            # print check_value, unit, HW_HEIGHT_UNIT_CENTIMETER
+            if check_value >= 30 and check_value <= 210:
+                return True
+        elif (unit, HW_WEIGHT_UNIT_KILOGRAM) in HW_TRANSFORM_DICT:
+            check_value = HW_TRANSFORM_DICT[(unit, HW_WEIGHT_UNIT_KILOGRAM)] * value
+            # print check_value, unit, HW_WEIGHT_UNIT_KILOGRAM
+            if check_value >= 30 and check_value <= 200:
+                return True
+        return False
 
     ######################################################################
     #   Output Format
@@ -213,7 +231,7 @@ class HWHelper(object):
                 return '{0}\'{1}"'.format(left_part.strip(), int(12*float('.'+right_part.strip())))
             else:
                 return ft_value + '\''
-        return value
+        return int(value)
     
 
     ######################################################################
@@ -229,17 +247,19 @@ class HWHelper(object):
     def extract(self, text):
         height_extractions = self.extract_height(text)
         weight_extractions = self.extract_weight(text)
+        # print 'height_extractions:', height_extractions
+        # print 'weight_extractions:', weight_extractions
 
         height_extractions = self.remove_dups(
             [self.normalize_height(_) for _ in height_extractions])
         weight_extractions = self.remove_dups(
             [self.normalize_weight(_) for _ in weight_extractions])
+        # print text
+        # print 'height_extractions:', height_extractions
+        # print 'weight_extractions:', weight_extractions
 
-        print 'height_extractions:', height_extractions
-        print 'weight_extractions:', weight_extractions
-
-        height = {'raw': text}
-        weight = {'raw': text}
+        height = {'raw': height_extractions}
+        weight = {'raw': weight_extractions}
 
         for target_unit in [HW_HEIGHT_UNIT_CENTIMETER, HW_HEIGHT_UNIT_FOOT]:
             height[target_unit] = [self.format_output(target_unit, _) for _ in self.transform(height_extractions, target_unit)]
@@ -267,7 +287,7 @@ if __name__ == '__main__':
 
     # text = "Hair Long Blonde Languages Afrikaans English Body Type slender Age 20-24 Breasts A Eyes blue Height 1.78 Skin Fair Weight 51 Zandalee"
     
-    text = "Hair Long Blonde Languages Afrikaans English Body Type slender Age 20-24 Breasts A Eyes blue Height 1.78 Skin Fair Weight 51 Zandalee | Height 5'3\" Weight 103 "
+    text = "Hair Long Blonde Languages Afrikaans English Body Type slender Age 20-24 Breasts A Eyes blue Height 1.78 Skin Fair Weight 51 Zandalee | Height 5'3\" Weight 103 | Invalid Height 220 Invalid Weight 10kg"
 
     import json
     hw = HWHelper()

@@ -2,7 +2,7 @@
 # @Author: ZwEin
 # @Date:   2016-07-22 17:52:30
 # @Last Modified by:   ZwEin
-# @Last Modified time: 2016-11-11 12:37:28
+# @Last Modified time: 2016-11-11 12:49:36
 
 import re
 
@@ -55,7 +55,7 @@ HW_TRANSFORM_DICT = {
     (HW_HEIGHT_UNIT_FOOT, HW_HEIGHT_UNIT_INCH): 12,
     (HW_HEIGHT_UNIT_INCH, HW_HEIGHT_UNIT_METER): 0.0254,
     (HW_HEIGHT_UNIT_INCH, HW_HEIGHT_UNIT_CENTIMETER): 2.54,
-    (HW_HEIGHT_UNIT_INCH, HW_HEIGHT_UNIT_FOOT): (1/12),
+    (HW_HEIGHT_UNIT_INCH, HW_HEIGHT_UNIT_FOOT): (1./12),
     (HW_HEIGHT_UNIT_INCH, HW_HEIGHT_UNIT_INCH): 1,
     (HW_WEIGHT_UNIT_POUND, HW_WEIGHT_UNIT_POUND): 1,
     (HW_WEIGHT_UNIT_POUND, HW_WEIGHT_UNIT_KILOGRAM): 0.45359237,
@@ -197,7 +197,7 @@ class HWHelper(object):
             imd_value = 0.
             for (unit, value) in extraction.iteritems():
                 imd_value += HW_TRANSFORM_DICT[(unit, target_unit)] * value
-                # print imd_value, HW_TRANSFORM_DICT[(unit, target_unit)], value
+                # print (unit, target_unit), imd_value, HW_TRANSFORM_DICT[(unit, target_unit)], value
             ans.append(imd_value)
         return ans
 
@@ -267,7 +267,7 @@ if __name__ == '__main__':
 
     # text = "Hair Long Blonde Languages Afrikaans English Body Type slender Age 20-24 Breasts A Eyes blue Height 1.78 Skin Fair Weight 51 Zandalee"
     
-    text = "Hair Long Blonde Languages Afrikaans English Body Type slender Age 20-24 Breasts A Eyes blue Height 1.78 Skin Fair Weight 51 Zandalee"
+    text = "Hair Long Blonde Languages Afrikaans English Body Type slender Age 20-24 Breasts A Eyes blue Height 1.78 Skin Fair Weight 51 Zandalee | Height 5'3\" Weight 103 "
 
     import json
     hw = HWHelper()

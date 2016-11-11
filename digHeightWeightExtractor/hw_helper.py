@@ -2,7 +2,7 @@
 # @Author: ZwEin
 # @Date:   2016-07-22 17:52:30
 # @Last Modified by:   ZwEin
-# @Last Modified time: 2016-11-11 11:16:33
+# @Last Modified time: 2016-11-11 11:16:55
 
 import re
 
@@ -184,17 +184,8 @@ if __name__ == '__main__':
     # text = "I am 25 of age, stand 5ft5in, fair in complexion, Long hair"
 
     # text = "Measurements: 105lbs 5'2\" 34c with a beautiful face"
-    
-    # text = "Travel: \n worldwide \n \n \n Weight: \n 117 lb (53 kg) \n \n \n Height: \n 5.5 ft (166 cm) \n \n \n Ethnicity: \n Indian \n"
 
-    # text = "Age: \n 24 \n \n \n Height: \n 272cm / 8'9��� \n \n \n Weight: \n 55kg / 121lbs \n \n \n Body (cm): \n 36/32/34 \n"
-
-    # text = "Age: \n 24 \n \n \n Height: \n 5.7 / 8'9��� \n \n \n Weight: \n 55kg / 121lbs \n \n \n Body (cm): \n 36/32/34 \n"
-
-    # text = "Hair Long Blonde Languages Afrikaans English Body Type slender Age 20-24 Breasts A Eyes blue Height\n 1.78 Skin Fair Weight\n 51 Zandalee"
-    
-    text = "Hair Long Blonde Languages Afrikaans English Body Type slender Age 20-24 Breasts A Eyes blue Height\n 1.20 Skin Fair Weight\n 51 Zandalee"
-
+    text = "Travel: \n worldwide \n \n \n Weight: \n 117 lb (53 kg) \n \n \n Height: \n 5.5 ft (166 cm) \n \n \n Ethnicity: \n Indian \n"
 
     import json
     hw = HWHelper()

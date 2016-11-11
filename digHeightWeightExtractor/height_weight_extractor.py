@@ -5,10 +5,10 @@
 # @Last Modified time: 2016-11-08 12:50:54
 
 
-import copy 
-import types
+import copy
 from digExtractor.extractor import Extractor
 from hw_helper import HWHelper
+
 
 class HeightWeightExtractor(Extractor):
 

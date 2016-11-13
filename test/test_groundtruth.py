@@ -2,8 +2,11 @@
 # @Author: ZwEin
 # @Date:   2016-11-08 14:50:34
 # @Last Modified by:   ZwEin
-# @Last Modified time: 2016-11-08 18:27:02
+# @Last Modified time: 2016-11-13 15:32:04
 import unittest
+
+import os,sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import groundtruth
 from digExtractor.extractor_processor import ExtractorProcessor

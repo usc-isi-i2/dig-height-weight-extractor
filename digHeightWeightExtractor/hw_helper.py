@@ -257,11 +257,18 @@ class HWHelper(object):
 
         for target_unit in [HW_WEIGHT_UNIT_KILOGRAM, HW_WEIGHT_UNIT_POUND]:
             weight[target_unit] = [self.format_output(target_unit, _) for _ in self.transform(weight_extractions, target_unit)]
+        output = {}
 
-        return {
-            'height': height,
-            'weight': weight
-        }
+        if len(weight['raw']) > 0:
+            output['weight'] = weight
+        if len(height['raw']) > 0:
+            output['height'] = height
+
+        if 'height' not in output and\
+           'weight' not in output:
+            return None
+
+        return output
 
 
 if __name__ == '__main__':

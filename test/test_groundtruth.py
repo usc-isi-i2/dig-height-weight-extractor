@@ -5,6 +5,7 @@
 # @Last Modified time: 2016-11-13 15:32:04
 import unittest
 
+import json
 import os,sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -33,10 +34,13 @@ class TestGroundtruthMethods(unittest.TestCase):
             self.assertIn('extracted', updated_doc)
             self.assertTrue(len(updated_doc['extracted']) > 0)
             extraction = updated_doc['extracted'][0]['result']['value']
-            # print extraction['height']
-            # print extraction['weight']
-            self.assertEqual(extraction['height'], doc['height'])
-            self.assertEqual(extraction['weight'], doc['weight'])
+
+            if 'height' in doc:
+                self.assertIn('height', extraction)
+                self.assertEqual(extraction['height'], doc['height'])
+            if 'weight' in doc:
+                self.assertIn('weight', extraction)
+                self.assertEqual(extraction['weight'], doc['weight'])
 
 
 if __name__ == '__main__':

@@ -42,19 +42,19 @@ HW_HEIGHT_UNITS_DICT = {
 HW_TRANSFORM_DICT = {
     (HW_HEIGHT_UNIT_METER, HW_HEIGHT_UNIT_METER): 1,
     (HW_HEIGHT_UNIT_METER, HW_HEIGHT_UNIT_CENTIMETER): 100,
-    (HW_HEIGHT_UNIT_METER, HW_HEIGHT_UNIT_FOOT): (1/0.3048),
-    (HW_HEIGHT_UNIT_METER, HW_HEIGHT_UNIT_INCH): (1/0.0254),
+    (HW_HEIGHT_UNIT_METER, HW_HEIGHT_UNIT_FOOT): (1 / 0.3048),
+    (HW_HEIGHT_UNIT_METER, HW_HEIGHT_UNIT_INCH): (1 / 0.0254),
     (HW_HEIGHT_UNIT_CENTIMETER, HW_HEIGHT_UNIT_METER): 0.01,
     (HW_HEIGHT_UNIT_CENTIMETER, HW_HEIGHT_UNIT_CENTIMETER): 1,
-    (HW_HEIGHT_UNIT_CENTIMETER, HW_HEIGHT_UNIT_FOOT): (1/30.48),
-    (HW_HEIGHT_UNIT_CENTIMETER, HW_HEIGHT_UNIT_INCH): (1/2.54),
+    (HW_HEIGHT_UNIT_CENTIMETER, HW_HEIGHT_UNIT_FOOT): (1 / 30.48),
+    (HW_HEIGHT_UNIT_CENTIMETER, HW_HEIGHT_UNIT_INCH): (1 / 2.54),
     (HW_HEIGHT_UNIT_FOOT, HW_HEIGHT_UNIT_METER): 0.3048,
     (HW_HEIGHT_UNIT_FOOT, HW_HEIGHT_UNIT_CENTIMETER): 30.48,
     (HW_HEIGHT_UNIT_FOOT, HW_HEIGHT_UNIT_FOOT): 1,
     (HW_HEIGHT_UNIT_FOOT, HW_HEIGHT_UNIT_INCH): 12,
     (HW_HEIGHT_UNIT_INCH, HW_HEIGHT_UNIT_METER): 0.0254,
     (HW_HEIGHT_UNIT_INCH, HW_HEIGHT_UNIT_CENTIMETER): 2.54,
-    (HW_HEIGHT_UNIT_INCH, HW_HEIGHT_UNIT_FOOT): (1./12),
+    (HW_HEIGHT_UNIT_INCH, HW_HEIGHT_UNIT_FOOT): (1. / 12),
     (HW_HEIGHT_UNIT_INCH, HW_HEIGHT_UNIT_INCH): 1,
     (HW_WEIGHT_UNIT_POUND, HW_WEIGHT_UNIT_POUND): 1,
     (HW_WEIGHT_UNIT_POUND, HW_WEIGHT_UNIT_KILOGRAM): 0.45359237,
@@ -155,8 +155,9 @@ class HWHelper(object):
                     print 'WARNING: contain uncatched case:', extraction
         elif '.' in extraction:
             left_part, right_part = extraction.split('.')
-            left_part, right_part = int(left_part.strip()), int(right_part.strip())
-            if left_part >=4 and left_part <=6 and right_part >= 1 and right_part <= 11:
+            left_part, right_part = int(
+                left_part.strip()), int(right_part.strip())
+            if left_part >= 4 and left_part <= 6 and right_part >= 1 and right_part <= 11:
                 ans[HW_HEIGHT_UNIT_FOOT] = left_part
                 ans[HW_HEIGHT_UNIT_INCH] = right_part
             else:
@@ -189,7 +190,7 @@ class HWHelper(object):
     ######################################################################
     #   Unit Transform
     ######################################################################
-    
+
     def transform(self, extractions, target_unit):
         ans = []
         for extraction in extractions:
@@ -206,11 +207,13 @@ class HWHelper(object):
 
     def sanity_check(self, unit, value):
         if (unit, HW_HEIGHT_UNIT_CENTIMETER) in HW_TRANSFORM_DICT:
-            check_value = HW_TRANSFORM_DICT[(unit, HW_HEIGHT_UNIT_CENTIMETER)] * value
+            check_value = HW_TRANSFORM_DICT[
+                (unit, HW_HEIGHT_UNIT_CENTIMETER)] * value
             if check_value >= 100 and check_value <= 210:   # cm
                 return True
         elif (unit, HW_WEIGHT_UNIT_KILOGRAM) in HW_TRANSFORM_DICT:
-            check_value = HW_TRANSFORM_DICT[(unit, HW_WEIGHT_UNIT_KILOGRAM)] * value
+            check_value = HW_TRANSFORM_DICT[
+                (unit, HW_WEIGHT_UNIT_KILOGRAM)] * value
             if check_value >= 30 and check_value <= 200:    # kg
                 return True
         return False
@@ -224,11 +227,10 @@ class HWHelper(object):
             ft_value = str(value)
             if '.' in ft_value:
                 left_part, right_part = ft_value.split('.')
-                return '{0}\'{1}"'.format(left_part.strip(), int(12*float('.'+right_part.strip())))
+                return '{0}\'{1}"'.format(left_part.strip(), int(12 * float('.' + right_part.strip())))
             else:
                 return ft_value + '\''
         return int(value)
-    
 
     ######################################################################
     #   Main
@@ -253,10 +255,12 @@ class HWHelper(object):
         weight = {'raw': weight_extractions}
 
         for target_unit in [HW_HEIGHT_UNIT_CENTIMETER, HW_HEIGHT_UNIT_FOOT]:
-            height[target_unit] = [self.format_output(target_unit, _) for _ in self.transform(height_extractions, target_unit)]
+            height[target_unit] = [self.format_output(
+                target_unit, _) for _ in self.transform(height_extractions, target_unit)]
 
         for target_unit in [HW_WEIGHT_UNIT_KILOGRAM, HW_WEIGHT_UNIT_POUND]:
-            weight[target_unit] = [self.format_output(target_unit, _) for _ in self.transform(weight_extractions, target_unit)]
+            weight[target_unit] = [self.format_output(
+                target_unit, _) for _ in self.transform(weight_extractions, target_unit)]
         output = {}
 
         if len(weight['raw']) > 0:
@@ -284,7 +288,7 @@ if __name__ == '__main__':
     # text = "Travel: \n worldwide \n \n \n Weight: \n 117 lb (53 kg) \n \n \n Height: \n 5.5 ft (166 cm) \n \n \n Ethnicity: \n Indian \n"
 
     # text = "Hair Long Blonde Languages Afrikaans English Body Type slender Age 20-24 Breasts A Eyes blue Height 1.78 Skin Fair Weight 51 Zandalee"
-    
+
     text = "Hair Long Blonde Languages Afrikaans English Body Type slender Age 20-24 Breasts A Eyes blue Height 1.78 Skin Fair Weight 51 Zandalee | Height 5'3\" Weight 103 | Invalid Height 220 Invalid Weight 10kg"
 
     import json
